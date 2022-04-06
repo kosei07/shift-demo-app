@@ -1,0 +1,97 @@
+
+.modal-center{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main_wrap {
+    padding-top: 70px;
+    -webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+}
+
+.margin_auto{
+    margin: auto;
+}
+
+/*----------position-relative-----------*/
+
+.position_relative {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+/*----------フォントサイズ-----------*/
+
+.s-fontsize{
+    font-size: 8px;
+}
+.m-fontsize{
+    font-size: 10px;
+}
+.l-fontsize{
+    font-size: 12px;
+}
+
+/*----------text-center-----------*/
+
+.text_center{
+    text-align: center;
+}
+/*----------spacer-----------*/
+
+.spacer_l{
+    height: 30px;
+}
+.spacer_m{
+    height: 20px;
+}
+.spacer_s{
+    height: 10px;
+}
+
+.spacer_ss{
+    height: 5px;
+}
+
+/*----------textinput_containner-----------*/
+
+.textinput_container{
+    margin: auto;
+    width: 80%;
+}
+
+
+.margin_padding_0{
+    margin: 0;
+    padding: 0;
+}
+
+.multiple_buttons_wrap{
+        justify-content: space-evenly;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;       
+}
+
+.button_wrap{
+    margin-left: 60%;
+}
+

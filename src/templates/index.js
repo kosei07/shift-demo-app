@@ -1,0 +1,8 @@
+export {default as TopPage} from './TopPage'
+export {default as StaffPage} from './StaffPage'
+export {default as ManagerPage} from './ManagerPage'
+export {default as Configuration} from './Configuratoin'
+export {default as Login} from './Login'
+export {default as SetPassword} from './SetPassword'
+export {default as ResetPassword} from './ResetPassword'
+export {default as Submissionperiod} from './Submissionperiod'
