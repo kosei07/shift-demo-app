@@ -28,15 +28,15 @@ const SetPassword = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const inputPassword = (event) => {
+    const inputPassword = (event) => {//パスワードの入力時の処理
         setPassword(event.target.value)
     }
 
-    const inputConfirmPassword = (event) => {
+    const inputConfirmPassword = (event) => {//確認用パスワードの入力時の処理
         setConfirmPassword(event.target.value)
     }
 
-    const onClick = ()=>{
+    const onClick = ()=>{//設定するをそした時の処理
         dispatch(setPasswordData(password, confirmPassword, id))
         setPassword("")
         setConfirmPassword("")

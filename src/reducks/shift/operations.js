@@ -6,7 +6,7 @@ import {hideLoadingAction, showLoadingAction} from "../loading/actions";
 
 export const setWorktime = (date,start,finish,comment,holidayCheckbox)=>{
     return async (dispach)=>{
-        if(holidayCheckbox){
+        if(holidayCheckbox){//希望休の場合の処理
             const obj = {}
             const data = {start:"希望休" , finish:"", comment: comment}
             const keyname = date
@@ -14,7 +14,8 @@ export const setWorktime = (date,start,finish,comment,holidayCheckbox)=>{
             dispach(setWorktimeAction(obj))  
             return  
         }
-        if(!comment){
+
+        if(!comment){//コメントがない時、コメントを空文字にする
             comment = ""
         }
     
@@ -22,7 +23,7 @@ export const setWorktime = (date,start,finish,comment,holidayCheckbox)=>{
         const data = {start:start , finish:finish, comment: comment}
         const keyname = date
         obj[keyname]= data
-        dispach(setWorktimeAction(obj))
+        dispach(setWorktimeAction(obj))//stateを変更
     }
 }
 export const clearWorktime = (date)=>{
@@ -32,14 +33,14 @@ export const clearWorktime = (date)=>{
         const keyname = date
         obj[keyname]= data
 
-        dispach(clearWorktimeAction(obj))
+        dispach(clearWorktimeAction(obj))//セットされているシフトの情報を削除
     }
 }
 
 export const submitMonthData=(name, month, month_data)=>{
     const data = {}
     data[month] = month_data
-    return async (dispacth)=>{
+    return async (dispacth)=>{//シフトの情報をshiftに追加する
         db.collection('shift')
         .doc(name)
         .set(data, { merge: true })
@@ -51,15 +52,15 @@ export const submitMonthData=(name, month, month_data)=>{
 
 export const fetchMyMonthData=(month,name)=>{
     return async (dispatch)=>{
-        dispatch(showLoadingAction("Please Wait..."));
-        db.collection('shift')
+        dispatch(showLoadingAction("Please Wait..."));//ローディング画面描画
+        db.collection('shift')//スタッフのシフト情報を取得
         .doc(name)
         .get()
         .then(snapshot=>{
             const data = snapshot.data()
-            if(data){
+            if(data){//スタッフのシフト情報がfirestoreにある時の処理
                 const month_data = data[month]
-                if(month_data){
+                if(month_data){//閲覧中の月のシフト情報がfirestoreにある時の処理
                 dispatch(fetchMonthDataAction(data[month])) 
                 }  else{
                     dispatch(clearMonthDataAction())
@@ -67,15 +68,15 @@ export const fetchMyMonthData=(month,name)=>{
             } else {
                 dispatch(clearMonthDataAction())
             }
-            dispatch(hideLoadingAction());
+            dispatch(hideLoadingAction());//ローディング画面描画終了
         })
         }
 }
 
 export const fetchEveryoneMonthData = (month)=>{
 
-    const today = new Date()
-    const preMonth = (today.getMonth() !== 0 )? today.getMonth() : 12 ;
+    const today = new Date() //現在の月を取得
+    const preMonth = (today.getMonth() !== 0 )? today.getMonth() : 12 ; //先月の月を取得
     const object = {
         1: {list:{},length:0},
         2: {list:{},length:0},
@@ -111,15 +112,16 @@ export const fetchEveryoneMonthData = (month)=>{
     }
 
     return async (dispacth)=>{
+        /*-----------------------閲覧中の月のスタッフ全員のシフト情報を取得する-----------------------*/
         db.collection('shift').get()
         .then((snapshot)=>{
             snapshot.forEach((snapshot)=>{
                 const name = snapshot.id
                 const data = snapshot.data()[month]                
                 const preMonthData = snapshot.data()[preMonth]
-                if(data){
+                if(data){//閲覧中の月のシフト情報がある時の処理
                 const data_length = Object.keys(data).length
-                for(let i = 1; i <= data_length;i++){
+                for(let i = 1; i <= data_length;i++){//シフト情報を日付ごとにobjectに書き込む
                     if(Object.keys(data[i]).length){
                         const obj ={}
                         obj[name] = data[i]
@@ -128,7 +130,7 @@ export const fetchEveryoneMonthData = (month)=>{
                     }
                 } 
             }
-            if(preMonthData){
+            if(preMonthData){//先月の情報をfirestoreから削除する
                 db.collection('shift')
                 .doc(name)
                 .update({[preMonth]: FieldValue.delete()})
@@ -140,6 +142,7 @@ export const fetchEveryoneMonthData = (month)=>{
 }
 
 export const  initializeMonthData =()=>{
+        /*-----------------------monthの初期化-----------------------*/
     return (dispatch)=>{
         dispatch(initializeMonthDataAction())
     }

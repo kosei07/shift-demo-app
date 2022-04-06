@@ -29,6 +29,15 @@
 .margin_auto{
     margin: auto;
 }
+/* -------------stack_css----------------- */
+.stack_wrap{
+    text-align: right;
+}
+
+.stack{
+    margin-right: 15%;
+    display:inline-block;
+}
 
 /*----------position-relative-----------*/
 
@@ -49,10 +58,15 @@
     font-size: 12px;
 }
 
-/*----------text-center-----------*/
+/*----------text-----------*/
 
 .text_center{
     text-align: center;
+}
+
+.text_p{
+    width: 70%;
+    margin-left: 15%;
 }
 /*----------spacer-----------*/
 

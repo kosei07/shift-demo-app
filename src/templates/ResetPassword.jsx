@@ -33,29 +33,29 @@ const ResetPassword = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const inputPrepassword = (event) => {
+    const inputPrepassword = (event) => {//旧パスワードの入力時の処理
         setPrepassword(event.target.value)
     }
 
-    const inputPassword = (event) => {
+    const inputPassword = (event) => {//パスワードの入力時の処理
         setPassword(event.target.value)
     }
 
 
-    const inputConfirmPassword = (event) => {
+    const inputConfirmPassword = (event) => {//確認用パスワードの入力時の処理
         setConfirmPassword(event.target.value)
     }
 
 
-    const onClick = () => {
+    const onClick = () => {//変更するを押した時の処理
         const crypto = require("crypto")
 
         const sha512 = crypto.createHash('sha512')
 
-        sha512.update(prepassword)
+        sha512.update(prepassword)//旧パスワードをハッシュ化
 
 
-        if (sha512.digest('hex') === hashedText) {
+        if (sha512.digest('hex') === hashedText) {//旧パスワードが合致している時の処理
             dispatch(setPasswordData(password, confirmPassword, id))
         } else {
             dispatch(setMessage("error", "旧パスワードが間違っています"))

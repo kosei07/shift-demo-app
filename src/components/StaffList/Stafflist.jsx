@@ -9,7 +9,7 @@ import Card from '@mui/material/Card';
 import { getMember } from '../../reducks/member/selectors'
 import { fetchMember } from '../../reducks/member/operations'
 
-/*--------------サイズ取得---------------*/
+/*--------------画面サイズ取得---------------*/
 
 function getWindowSize() {
   let window_heigth = window.innerHeight;
@@ -21,11 +21,12 @@ function getWindowSize() {
 /*--------------リストの中身---------------*/
 
 function renderRow({ data, index, style }) {
+  /*--------------スタッフの情報---------------*/
   const { member_data, onClickFunction } = data;
   const name = member_data[index].name
   const id = member_data[index].id
 
-  const Click = () => {
+  const Click = () => {//スタッフリストからスタッフを選択されたとき処理
     onClickFunction(id, name)
   }
 
@@ -49,9 +50,10 @@ export default function Stafflist(props) {
 
   useEffect(() => {
     dispatch(fetchMember())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-
+/*--------------------描画されるリストのサイズを指定---------------------*/
   const window_size = getWindowSize()
 
   const box_height = window_size[0] * 0.5;

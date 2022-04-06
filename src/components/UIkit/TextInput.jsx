@@ -2,6 +2,7 @@ import React from "react";
 import  TextField from "@material-ui/core/TextField";
 
 const TextInput = (props)=>{
+        /*--------------他コンポーネントで利用されるテキストインプット---------------*/
     return(
         <TextField 
         fullWidth={props.fullWidth}

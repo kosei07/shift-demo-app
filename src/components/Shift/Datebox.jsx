@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { setMessage } from "../../reducks/message/operations";
 import { useDispatch } from "react-redux";
 
+/*-------------------それぞれの日付のスタイル-------------------*/
 const updateSubmitStyle = {
     borderRadius: 2,
     backgroundColor: "rgba(255, 160, 122, 0.3)",
@@ -29,32 +30,34 @@ const anotherMonthStyle = {
 
 
 export const Datebox = (props) => {
-    /*ーーーーーーーーーモーダルウィンドウーーーーーーー*/
-
+    /*--------------日付の情報の取得--------------*/
     const date = props.date
     const data = props.data
     const isStaffpage = props.isStaffpage
     const month = props.month
-    const [style, setStyle] = useState(defaultStyle)
-    const [updateSubmit, setUpdateSubmit] = useState(false)
+
+    const [style, setStyle] = useState(defaultStyle)//それぞれの日付のスタイルを設定する
+    const [updateSubmit, setUpdateSubmit] = useState(false)//シフトの情報変更の有無
+
     const [show, setShow] = useState(false)
-    const open = () => {
+
+    const open = () => {//shiftcheckもしくはworktimeを開く
         setShow(true)
     }
 
     useEffect(() => {
-        if (isStaffpage && !props.withinPeriod) {
+        if (isStaffpage && !props.withinPeriod) { //スタッフ用のページかつ提出可能期間外の処理
             setStyle(outOfPeriodStyle)
-            if (!month) {
+            if (!month) { //スタッフ用のページかつ提出可能期間外またカレンダー前後の閲覧中ではない日付の処理
                 setStyle(anotherMonth_outofPeriodStyle)
             }
         } else {
-            if (props.newSubmit && updateSubmit) {
+            if (props.newSubmit && updateSubmit) {//シフトの情報が変更された時の処理
                 setStyle(updateSubmitStyle)
-            } else {
+            } else {//管理者用のページまたはスタッフ用のページの提出可能期間内の処理
                 setStyle(defaultStyle)
                 setUpdateSubmit(false)
-                if (!month) {
+                if (!month) {//スタッフ用のページのカレンダー前後の閲覧中ではない日付の処理
                     setStyle(anotherMonthStyle)
                 }
             }
@@ -96,11 +99,12 @@ export const Datebox = (props) => {
 export default Datebox
 
 export const StaffRenderComponent = (props) => {
+    /*--------------日付の情報の取得--------------*/
+
     const data = props.data
     const start = data.start
     const finish = data.finish
     const comment = data.comment
-
     return (
         <div className="margin_padding_0">
             <Worktime
@@ -129,15 +133,15 @@ export const ManagerRenderComponent = (props) => {
     const dispatch = useDispatch()
     let color = 'lightgray'
 
-    const holidaystyle = {
+    const holidaystyle = {//希望休の時の文字のスタイル
         color: "blue"
     }
 
-    const defaultstyle = {
+    const defaultstyle = {//希望休以外の時の文字のスタイル
         color: "#000"
     }
 
-    for (const key in list) {
+    for (const key in list) {//提出されたその日のシフト情報を配列にpush
         for (const name in list[key]) {
             ary.push(
                 <tr key={key}>
@@ -151,6 +155,7 @@ export const ManagerRenderComponent = (props) => {
         }
     }
 
+    /*------------------日付ごとのシフトに入れる人数によって表示される円の色を変える-------------------*/
     if (length === 1 || length === 2) {
         color = 'khaki'
     } else if (length === 3 || length === 4) {

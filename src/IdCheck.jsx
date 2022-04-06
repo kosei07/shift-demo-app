@@ -11,9 +11,8 @@ const IdCheck = ({children}) => {
         if (!id) {
             dispatch(listenIdState())
         }
-    });
-
-    console.log()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
     
     if (id) {
         return children

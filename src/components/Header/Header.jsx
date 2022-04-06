@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
@@ -32,9 +32,9 @@ const Header = () => {
     const classes = useStyles();
     const [open, setOpen] = useState(false)
     
-    const handleDrawerToggle = useCallback(() => {
+    const handleDrawerToggle =() => { //closableDrawerを開く
         setOpen(!open)
-    }, [setOpen, open])
+    }
 
 
     return (

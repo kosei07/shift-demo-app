@@ -4,6 +4,8 @@ import { PrimaryButton } from "./index";
 import { deleteMessage } from "../../reducks/message/operations";
 import { getMessage } from "../../reducks/message/selectors";
 
+/*--------------メッセージコンポーネントのスタイル---------------*/
+
 const error_style = {
     color:"red",
     background: "-webkit-repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px,rgb(255, 227, 234) 3px, rgb(255, 227, 234) 7px",
@@ -18,8 +20,8 @@ const normal_style = {
     boxShadow: "0px 0px 0px 5px ghostwhite"
 }
 
-const MessageComponent = (props) => {
-
+const MessageComponent = () => {
+    /*--------------メッセージ情報の取得---------------*/
     const selector = useSelector((state) => state);
     const message = getMessage(selector)
     const type = message.type
@@ -27,11 +29,11 @@ const MessageComponent = (props) => {
     
 
     const dispatch = useDispatch()
-    const close = () => {
+    const close = () => {//「閉じる」を押した時の処理
         dispatch(deleteMessage())
     }
-    if (type) {
 
+    if (type) {
         return (
             <div className="overlay modal-center">
                 <div className="content message_animation" 

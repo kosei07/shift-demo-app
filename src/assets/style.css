@@ -52,9 +52,6 @@
 
  /*--------------スタッフcss---------------*/
 
- .help_wrap{
-   margin-left: 70%;
- }
 
  .staffpage_top_outside{
   justify-content: space-evenly;
@@ -152,9 +149,9 @@
 
   .shiftcheck_table > thead > tr{
     border-top: 1px solid rgba(128, 128, 128, 0.4);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
   }
   .shiftcheck_table > tbody > tr{
-    border-top: 1px solid rgba(128, 128, 128, 0.4);
     border-bottom: 1px solid rgba(128, 128, 128, 0.4);
   }
 
@@ -295,12 +292,6 @@
 
 /*-----------------addstaff_css--------------------*/
 
-.aadstaff_wrap{
-  border: 1px solid rgba(128, 128, 128, 0.4);
-  border-radius: 5px;
-  margin: auto;
-  width: 75%;
-}
 
 .aadstaff_wrap > p{
   width: 80%;

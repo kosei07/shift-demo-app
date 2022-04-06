@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {Calender} from "../components/Shift/index";
+import { Calender } from "../components/Shift/index";
 import { fetchSubmissionPeriod } from "../reducks/period/operations";
 import { getPeriod } from "../reducks/period/selectors";
 import { fetchEveryoneMonthData } from "../reducks/shift/operations";
@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         list: {
             margin: "auto",
-            width:"80%",
+            width: "80%",
         },
-        listItem:{
-            textAlign:"center"
+        listItem: {
+            textAlign: "center"
         }
     }),
 );
@@ -40,16 +40,16 @@ const ManagerPage = () => {
     const period = getPeriod(selector)
     const [open, setOpen] = useState(false)
 
-    function fetchEveryoneMonthDataFunction(month) {
+    function fetchEveryoneMonthDataFunction(month) {//スタッフ全員のシフト情報を取得
         dispatch(fetchEveryoneMonthData(month))
     }
     useEffect(() => {
-        dispatch(fetchSubmissionPeriod())
-        dispatch(fetchisNotSubmittedmember())
-    },[])
+        dispatch(fetchSubmissionPeriod())//提出可能期間の取得
+        dispatch(fetchisNotSubmittedmember())//シフト未提出者の取得
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    console.log('a')
-    const onClick = () => {
+    const onClick = () => {//シフト未提出者一覧を開く
         setOpen(true)
     }
 
@@ -102,15 +102,13 @@ const ListComponent = (props) => {
                                 {
                                     props.isNotSubmittedMember.map((name) => {
                                         return (
-                                            <>
-                                                <ListItem className={classes.listItem}>
-                                                    <ListItemText primary={name} />
-                                                </ListItem>
-                                                <Divider />
-                                            </>
+                                            <ListItem className={classes.listItem} key={name}>
+                                                <ListItemText primary={name} />
+                                            </ListItem>
                                         )
                                     })
                                 }
+                                <Divider />
                             </List>
                         </>
                         :

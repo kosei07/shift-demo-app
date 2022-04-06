@@ -38,7 +38,6 @@ const ClosableDrawer = (props) => {
     const classes = useStyles()
     const { container } = props
 
-
     return (
         <nav className={classes.drawer}>
             <Drawer
@@ -51,7 +50,7 @@ const ClosableDrawer = (props) => {
                     paper: classes.drawerPaper,
                 }}
                 ModalProps={{
-                    keepMounted: true, // Better open performance on mobile.
+                    keepMounted: true
                 }}
             >
                 <List>
@@ -77,26 +76,26 @@ const DrawerMenus = (props) => {
         props.onClose(event)
 
         if (id === "manager") {
-            dispatch(fetchUserData('kyv39ixrt0'))
+            dispatch(fetchUserData('kyv39ixrt0')) // 管理者のデータを取得
             return
         } else if (id === "toppage") {
-            dispatch(initializeUserData());
+            dispatch(initializeUserData());　//stateのuserとmonthを初期化
             dispatch(initializeMonthData());
         }
         dispatch(push(path))
     }
 
     const menus_option = [
-        [
+        [//スタッフ・管理者専用ページ以外のメニュー
             { func: selectMenu, label: "管理者専用ページ", icon: <DateRangeIcon />, id: "manager", value: "" },
             { func: selectMenu, label: "トップページ", icon: <LogoutIcon />, id: "toppage", value: "/" }
         ],
-        [
+        [//スタッフページのメニュー
             { func: selectMenu, label: "カレンダー", icon: <DateRangeIcon />, id: "calender", value: "/staffpage" },
             { func: selectMenu, label: "パスワード変更", icon: <SettingsIcon />, id: "setting", value: "/resetpassword" },
             { func: selectMenu, label: "ログアウト", icon: <LogoutIcon />, id: "toppage", value: "/" }
         ],
-        [
+        [//管理者専用ページのメニュー
             { func: selectMenu, label: "カレンダー", icon: <DateRangeIcon />, id: "calender", value: "/managerpage" },
             { func: selectMenu, label: "提出期間", icon: <CheckBoxIcon />, id: "submittion", value: "/managerpage/shiftperiod" },
             { func: selectMenu, label: "スタッフ管理", icon: <PersonAddAltIcon />, id: "configration", value: "/managerpage/configuration" },
@@ -107,7 +106,7 @@ const DrawerMenus = (props) => {
 
     let menus = []
 
-    if (role !== "" && isSignedIn) {
+    if (role !== "" && isSignedIn) { //現在のページに合わせてメニューを変更する
         if (role === "staff") {
             menus = menus_option[1]
         } else if (role === "manager") {

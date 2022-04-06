@@ -19,6 +19,7 @@ export default function Worktime(props) {
     const [holidayCheckbox, setHolidayCheckBox] = useState(false)
     const [pressableOkButton, setPressableOkButton] = useState(false)
     const [pressableClearButton, setPressableClearButton] = useState(false)
+
     useEffect(() => {
         if (props.start) {
             if (props.start !== '希望休') {
@@ -36,6 +37,7 @@ export default function Worktime(props) {
         }
     }, [props.start,props.finish,props.comment])
 
+/*--------------------コメントが変更された時の処理---------------------*/
     const commentChange = (e) => {
         setComment(e.target.value)
         if(holidayCheckbox || start){
@@ -43,7 +45,7 @@ export default function Worktime(props) {
             setPressableClearButton(false)
         }
     }
-
+/*--------------------「閉じる」が押された時の処理---------------------*/
     const close = () => {
         if(props.start){
         setStart(start)
@@ -60,6 +62,7 @@ export default function Worktime(props) {
         }
         props.setShow(false)
     }
+/*--------------------「ok」が押された時の処理---------------------*/
 
     const onOkClick =() => {
         if(start !== "" && finish !== ""){
@@ -77,6 +80,7 @@ export default function Worktime(props) {
         props.setUpdateSubmit(true)
         props.setShow(false)
     }
+/*--------------------「削除」が押された時の処理---------------------*/
 
     const onClearClick = () => {
         dispatch(clearWorktime(props.date))
@@ -87,6 +91,8 @@ export default function Worktime(props) {
         props.setUpdateSubmit(true)
         props.setShow(false)
     }
+
+/*--------------------「希望休」のチェックボックスが押された時の処理---------------------*/
 
     const handleChange = () => {
         setStart("")
@@ -101,7 +107,7 @@ export default function Worktime(props) {
     }
 
     /*--------------JSX-------------*/
-    if (props.show) {
+    if (props.show) {//日付が選択された時のみ開く
         return (
             <div className="overlay modal-center">
                 <div className="content" onClick={(e) => e.stopPropagation()}>

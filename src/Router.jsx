@@ -1,5 +1,4 @@
 import React from "react";
-// import { Route, Routes } from "react-router-dom"
 import { Route, Switch } from "react-router"
 import { TopPage, StaffPage, ManagerPage, Configuration, Login, SetPassword, ResetPassword, Submissionperiod } from "./templates/index"
 import IdCheck from "./IdCheck";

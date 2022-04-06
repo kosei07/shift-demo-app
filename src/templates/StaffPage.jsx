@@ -25,17 +25,19 @@ const Staffpage = () => {
     const name = user_data.name
     const id = user_data.id
     const isSubmitted = user_data.isSubmitted
-    function fetchMyMonthDataFunction(month, name) {
+
+    function fetchMyMonthDataFunction(month, name) {//スタッフのシフト情報を取得
         dispatch(fetchMyMonthData(month, name))
         dispatch(fetchSubmissionPeriod())
     }
 
 
     useEffect(() => {
-        dispatch(fetchSubmissionPeriod())
+        dispatch(fetchSubmissionPeriod())//提出可能期間の取得
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const onClickHelp = () => {
+    const onClickHelp = () => {//「使い方」を押した時の処理
         dispatch(setMessage("comment", <div>
             <p>カレンダーの日付を選択し、提出内容が確定したら画面右下の「提出する」を押してください。</p>
             <p>提出内容は「提出する」を押した後でも何度でも変更できます。</p>
@@ -47,15 +49,17 @@ const Staffpage = () => {
     return (
         <>
             <div className="spacer_m"></div>
-            <div className="help_wrap">
-                <Stack direction="row" spacing={1}>
-                    <Chip
-                        label="使い方"
-                        onClick={onClickHelp}
-                        icon={<HelpOutlineIcon />}
-                        variant="outlined"
-                    />
-                </Stack>
+            <div className="stack_wrap">
+                <div className="stack">
+                    <Stack direction="row" spacing={1}>
+                        <Chip
+                            label="使い方"
+                            onClick={onClickHelp}
+                            icon={<HelpOutlineIcon />}
+                            variant="outlined"
+                        />
+                    </Stack>
+                </div>
             </div>
             <div className="staffpage_top_outside">
                 <h2 className="margin_padding_0 text_center">{name} さん</h2>

@@ -31,7 +31,7 @@ const Login = () => {
 
     const [password, setPassword] = useState("")
 
-    const inputPassword = (event) => {
+    const inputPassword = (event) => {//パスワードの入力時の処理
         setPassword(event.target.value)
     }
 

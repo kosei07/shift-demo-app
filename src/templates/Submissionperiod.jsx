@@ -20,16 +20,16 @@ const useStyles = makeStyles(() =>
     }))
 
 
-const Submissionperiod = (props) => {
+const Submissionperiod = () => {
 
     const classes = useStyles()
 
     const selector = useSelector(state => state)
     const period = getPeriod(selector)
 
-
     const dispatch = useDispatch()
     const date_array = []
+
     const [submissionPeriodBeginId, setsubmissionPeriodBeginId] = useState(false)
     const [submissionPeriodBeginDate, setsubmissionPeriodBeginDate] = useState(false)
     const [submissionPeriodEndDate, setsubmissionPeriodEndDate] = useState(false)
@@ -43,9 +43,9 @@ const Submissionperiod = (props) => {
     const month_length = new Date(year, month, 0).getDate();
     const [isThisMonth, setIsThisMonth] = useState(true)
 
-    const moveNextMonth = () => {
+    const moveNextMonth = () => {//次月に移動
         month++
-        if (month > 12) {
+        if (month > 12) {//次月が一月の時の処理
             month = 1
             setYear(year + 1)
             moveMonth(month)
@@ -55,9 +55,9 @@ const Submissionperiod = (props) => {
         setIsThisMonth(false)
     }
 
-    const moveThisMonth = () => {
+    const moveThisMonth = () => {//今月に移動
         month--
-        if (month < 1) {
+        if (month < 1) {//今月が12月の時の処理
             month = 12
             setYear(year - 1)
             moveMonth(12)
@@ -67,38 +67,23 @@ const Submissionperiod = (props) => {
         setIsThisMonth(true)
     }
 
-
-
-    /*ーーーーー先月末の日付ーーーーーーー*/
-
-    const n = new Date(year, month - 1, 1).getDay();
-
-
-    for (let i = 0; i < n; i++) {
-        date_array.unshift(<div></div>)
-    }
-
-    /*ーーーーー今月の日付ーーーーーーー*/
-
-
-
-    const onClick = (e) => {
-        if (!submissionPeriodBeginDate) {
+    const onClick = (e) => {//日付を選択した時の処理
+        if (!submissionPeriodBeginDate) {//期間の開始が設定されてない時
             setsubmissionPeriodBeginId(e.target.id)
             setsubmissionPeriodBeginDate(e.target.textContent)
             setsubmissionPeriodBeginMonth(month)
         } else {
-            if (submissionPeriodEndDate) {
+            if (submissionPeriodEndDate) {//すでに選択されている期間がある時の処理
                 setsubmissionPeriodBeginId(e.target.id)
                 setsubmissionPeriodBeginDate(e.target.textContent)
                 setsubmissionPeriodBeginMonth(month)
                 setsubmissionPeriodEndDate(false)
                 setsubmissionPeriodEndMonth(false)
             } else {
-                if ((e.target.id - submissionPeriodBeginId) > 0) {
+                if ((e.target.id - submissionPeriodBeginId) > 0) {//期間が終了、開始の順で選択された時の処理
                     setsubmissionPeriodEndDate(e.target.textContent)
                     setsubmissionPeriodEndMonth(month)
-                } else {
+                } else {//期間が開始、終了の順で選択された時の処理（通常時）
                     setsubmissionPeriodEndDate(submissionPeriodBeginDate)
                     setsubmissionPeriodEndMonth(submissionPeriodBeginMonth)
                     setsubmissionPeriodBeginDate(e.target.textContent)
@@ -109,10 +94,21 @@ const Submissionperiod = (props) => {
     }
 
 
+    /*ーーーーー先月末の日付ーーーーーーー*/
+
+    const n = new Date(year, month - 1, 1).getDay();//閲覧中の月の前月の最終日の曜日を取得
+
+
+    for (let i = 0; i < n; i++) {
+        date_array.unshift(<div></div>)
+    }
+
+    /*ーーーーー今月の日付ーーーーーーー*/
+
     for (let i = 1; i <= month_length; i++) {
-        if (submissionPeriodBeginMonth === submissionPeriodEndMonth) {
-            if (month === submissionPeriodBeginMonth) {
-                if ((submissionPeriodBeginDate < i && i <= submissionPeriodEndDate) || (submissionPeriodBeginDate === i)) {
+        if (submissionPeriodBeginMonth === submissionPeriodEndMonth) {//選択した期間の開始と終了の日付が同じ月の時の処理 
+            if ((month === submissionPeriodBeginMonth) && (((submissionPeriodBeginDate <= i) && (i <= submissionPeriodEndDate)) || (submissionPeriodBeginDate === i))) {
+                //選択した期間内に含まれるときの処理
                     date_array.push(
                         <ShiftperiodDatebox
                             date={i}
@@ -121,17 +117,7 @@ const Submissionperiod = (props) => {
                             onClick={onClick}
                             withinRange={true}
                         />)
-                } else {
-                    date_array.push(
-                        <ShiftperiodDatebox
-                            date={i}
-                            month={month}
-                            year={year}
-                            onClick={onClick}
-                            withinRange={false}
-                        />)
-                }
-            } else {
+            } else {//選択した期間外の時の処理
                 date_array.push(
                     <ShiftperiodDatebox
                         date={i}
@@ -144,8 +130,8 @@ const Submissionperiod = (props) => {
             }
         } else {
             if (submissionPeriodEndMonth !== false) {
-                if (month === submissionPeriodBeginMonth) {
-                    if (submissionPeriodBeginDate <= i) {
+                if (((month === submissionPeriodBeginMonth) && (submissionPeriodBeginDate <= i ))|| ((month !== submissionPeriodBeginMonth) && (submissionPeriodEndDate >= i))) {
+                //選択した期間内に含まれるときの処理
                         date_array.push(
                             <ShiftperiodDatebox
                                 date={i}
@@ -154,7 +140,7 @@ const Submissionperiod = (props) => {
                                 onClick={onClick}
                                 withinRange={true}
                             />)
-                    } else {
+                } else {//選択した期間外の時の処理
                         date_array.push(
                             <ShiftperiodDatebox
                                 date={i}
@@ -163,31 +149,10 @@ const Submissionperiod = (props) => {
                                 onClick={onClick}
                                 withinRange={false}
                             />)
-                    }
-                } else {
-                    if (submissionPeriodEndDate >= i) {
-                        date_array.push(
-                            <ShiftperiodDatebox
-                                date={i}
-                                month={month}
-                                year={year}
-                                onClick={onClick}
-                                withinRange={true}
-                            />)
-                    } else {
-                        date_array.push(
-                            <ShiftperiodDatebox
-                                date={i}
-                                month={month}
-                                year={year}
-                                onClick={onClick}
-                                withinRange={false}
-                            />)
-                    }
+                    // }
                 }
             } else {
-                if (month === submissionPeriodBeginMonth) {
-                    if (i === submissionPeriodBeginDate) {
+                if ((month === submissionPeriodBeginMonth) && (i === submissionPeriodBeginDate)) {//選択した期間内に含まれるときの処理
                         date_array.push(
                             <ShiftperiodDatebox
                                 date={i}
@@ -196,17 +161,7 @@ const Submissionperiod = (props) => {
                                 onClick={onClick}
                                 withinRange={true}
                             />)
-                    } else {
-                        date_array.push(
-                            <ShiftperiodDatebox
-                                date={i}
-                                month={month}
-                                year={year}
-                                onClick={onClick}
-                                withinRange={false}
-                            />)
-                    }
-                } else {
+                } else {//選択した期間外の時の処理
                     date_array.push(
                         <ShiftperiodDatebox
                             date={i}
@@ -221,7 +176,7 @@ const Submissionperiod = (props) => {
     }
     /*ーーーーー来月頭の日付ーーーーーーー*/
 
-    const lastDay = new Date(year, month, 0).getDay();
+    const lastDay = new Date(year, month, 0).getDay();//閲覧中の月の最終日の曜日を取得
 
     for (let i = 1; i < 7 - lastDay; i++) {
         date_array.push(<div></div>)
@@ -231,13 +186,13 @@ const Submissionperiod = (props) => {
 
 
     const weeks = [];
-    const weeksCount = date_array.length / 7;
+    const weeksCount = date_array.length / 7;//カレンダーが何週分にわたるかを計算
 
-    for (let i = 0; i < weeksCount; i++) {
+    for (let i = 0; i < weeksCount; i++) {//日付の配列を一週間ごとに区切って配列にまとめる
         weeks.push(date_array.splice(0, 7))
     }
 
-    const onClickOk = () => {
+    const onClickOk = () => {//決定するを押した時の処理
         dispatch(setSubmissoinPeriod(submissionPeriodBeginMonth, submissionPeriodBeginDate, submissionPeriodEndMonth, submissionPeriodEndDate))
         setsubmissionPeriodBeginId(false)
         setsubmissionPeriodBeginDate(false)
@@ -246,7 +201,7 @@ const Submissionperiod = (props) => {
         setsubmissionPeriodEndMonth(false)
     }
 
-    const onClickClear = () => {
+    const onClickClear = () => {//クリアを押した時の処理
         setsubmissionPeriodBeginId(false)
         setsubmissionPeriodBeginDate(false)
         setsubmissionPeriodEndDate(false)
@@ -362,22 +317,22 @@ const Submissionperiod = (props) => {
 export default Submissionperiod
 
 const ShiftperiodDatebox = (props) => {
-
+/*----------------選択されている期間内に背景色をつける------------------*/
     let date = props.date
     let month = props.month
 
-    if (date < 10) {
+    if (date < 10) {//deteを二桁の文字列に変更
         date = "0" + date
     }
-    if (month < 10) {
+    if (month < 10) {//monthを二桁の文字列に変更
         month = "0" + month
     }
 
-    const within_style = {
+    const within_style = {//選択されている期間内の背景色
         backgroundColor: "rgba(255, 160, 122, 0.3)"
     }
 
-    const out_style = {
+    const out_style = {//選択されている期間外の背景色
         backgroundColor: "#fff"
     }
     return (

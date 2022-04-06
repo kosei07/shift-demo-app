@@ -2,9 +2,7 @@ import React from "react";
 import  Button  from "@material-ui/core/Button";
 
 const PrimaryButton =(props)=>{
-
-    // const classes = useStyles()
-
+    /*--------------他コンポーネントで利用されるボタン---------------*/
     return(
         <Button 
         color={props.color} 

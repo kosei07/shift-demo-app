@@ -3,6 +3,8 @@ import {useSelector} from "react-redux";
 import {getLoadingState, getLoadingText} from "../../reducks/loading/selectors";
 
 const Loading = ()=>{
+    /*--------------ローディング画面---------------*/
+
     const selector = useSelector((state) => state);
     const isBeingLoaded = getLoadingState(selector);
     const loadingText  = getLoadingText(selector)

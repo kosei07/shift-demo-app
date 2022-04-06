@@ -9,12 +9,12 @@ export default function Shiftcheck(props) {
 
     const setShow = props.setShow
 
-    const close = useCallback(() => {
+    const close = useCallback(() => {//shiftcheckを閉じる
         setShow(false)
     },[setShow])
 
     /*--------------JSX-------------*/
-    if (props.show) {
+    if (props.show) {//日付が選択された時のみ開く
         return (
             <div className="overlay modal-center">
                 <div className="content" onClick={(e) => e.stopPropagation()}>

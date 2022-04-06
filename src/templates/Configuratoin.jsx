@@ -1,83 +1,57 @@
 import React from "react";
-import { PrimaryButton, TextInput } from "../components/UIkit/index";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Stafflist ,DeleteStaff} from "../components/StaffList/index";
-import { addStaff } from "../reducks/member/operations";
-
-
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import AddReactionRoundedIcon from '@mui/icons-material/AddReactionRounded';
+import { Stafflist, DeleteStaff, AddStaff } from "../components/StaffList/index"
 const Configuration = () => {
 
-    const dispatch = useDispatch()
-    const [open, setOpen] = useState(false)
-    const [staffFirstName, setStaffFirstName] = useState("");
-    const [staffLastName, setStaffLastName] = useState("");
+    const [openDeleteStaff, setOpenDeleteStaff] = useState(false)
+    const [openAddStaff, setOpenAddStaff] = useState(false)
     const [deleteStaffName, setDeleteStaffName] = useState("");
     const [deleteStaffId, setDeleteStaffId] = useState("");
 
-    const inputFirstName = (event) => {
-        setStaffFirstName(event.target.value)
-    }
-
-    const inputLastName = (event) => {
-        setStaffLastName(event.target.value)
-    }
 
 
-
-    const onClickFunction = (id, name) => {
+    const onClickFunction = (id, name) => {//スタッフリストのスタッフを押した時の処理
         setDeleteStaffName(name)
         setDeleteStaffId(id)
-        setOpen(true)
+        setOpenDeleteStaff(true)
+    }
+
+    const onClickAddStaffButton = () => {//スタッフリストのスタッフを押した時の処理
+        setOpenAddStaff(true)
     }
 
 
     return (
         <>
             <div className="spacer_m"></div>
+            <p className="text_p">　スタッフを追加する場合は「スタッフ追加」を押してください。<br />
+                また、スタッフを削除する場合はスタッフ一覧から選んでください。</p>
+            <div className="stack_wrap">
+                <div className="stack">
+                    <Stack direction="row" spacing={1}>
+                        <Chip
+                            label="スタッフ追加"
+                            onClick={onClickAddStaffButton}
+                            icon={< AddReactionRoundedIcon />}
+                            variant="outlined"
+                        />
+                    </Stack>
+                </div>
+            </div>
+            <div className="spacer_m"></div>
             <Stafflist onClickFunction={onClickFunction} />
             <div className="spacer_m"></div>
-            <div className="aadstaff_wrap">
-                <div className="spacer_m"></div>
-                <p>追加するスタッフの名前を入力してください</p>
-                <div className="addstaff_inputtext_container">
-                    <div className="addstaff_inputtext">
-                        <TextInput
-                            fullWidth={true} label={"姓"} multiline={false} required={true}
-                            rows={1} value={staffLastName} type={"text"} onChange={inputLastName}
-                        />
-                    </div>
-                    <div className="addstaff_inputtext">
-                        <TextInput
-                            fullWidth={true} label={"名"} multiline={false} required={true}
-                            rows={1} value={staffFirstName} type={"text"} onChange={inputFirstName}
-                        />
-                    </div>
-                </div>
-                <div className="spacer_s"></div>
-                <div className="multiple_buttons_wrap">
-                    <PrimaryButton
-                        label={"クリア"}
-                        onClick={() => {
-                            setStaffLastName('');
-                            setStaffFirstName('');
-                        }}
-                    />
-                    <PrimaryButton
-                        label={"追加"}
-                        color="secondary"
-                        onClick={() => {
-                            dispatch(addStaff(staffLastName, staffFirstName));
-                            setStaffLastName('');
-                            setStaffFirstName('');
-                        }}
-                    />
-                </div>
-                <div className="spacer_m"></div>
-            </div>
             <DeleteStaff
-                open={open}
-                setOpen={setOpen}
+                openDeleteStaff={openDeleteStaff}
+                setOpenDeleteStaff={setOpenDeleteStaff}
+                deleteStaffName={deleteStaffName}
+                deleteStaffId={deleteStaffId} />
+            <AddStaff
+                openAddStaff={openAddStaff}
+                setOpenAddStaff={setOpenAddStaff}
                 deleteStaffName={deleteStaffName}
                 deleteStaffId={deleteStaffId} />
         </>

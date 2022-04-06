@@ -18,7 +18,7 @@ export const listenIdState = () => {
 
 export const setPasswordData = (password, confirmPassword, id) => {
     return async (dispatch) => {
-
+        /*-----------------------バリデーション-----------------------*/
         if (!(password && confirmPassword)) {
             dispatch(setMessage("error",<p>未入力の項目があります</p>))
             return
@@ -44,6 +44,7 @@ export const setPasswordData = (password, confirmPassword, id) => {
             return
         }
 
+        /*-----------------------パスワードのハッシュ化-----------------------*/
         const crypto = require("crypto")
 
         const sha512 = crypto.createHash('sha512')
@@ -56,7 +57,7 @@ export const setPasswordData = (password, confirmPassword, id) => {
             hashedText: hashedText,
         }
 
-        db.collection('users').doc(id).set(data, { merge: true })
+        db.collection('users').doc(id).set(data, { merge: true })//スタッフの情報をusersに追加
             .then(
                 dispatch(fetchUserData(id))
             )
@@ -65,8 +66,7 @@ export const setPasswordData = (password, confirmPassword, id) => {
 
 export const fetchUserData = (id) => {
     return (dispatch, getState) => {
-
-        db.collection('users').doc(id).get()
+        db.collection('users').doc(id).get()//ユーザーの情報を取得
             .then(snapshot => {
                 const data = snapshot.data()
                 dispatch(fetchUserDataAction({
@@ -77,9 +77,9 @@ export const fetchUserData = (id) => {
                     role: data.role,
                     isSubmitted: data.isSubmitted
                 }))
-                if (getState().user.hashedText) {
+                if (getState().user.hashedText) {//パスワードが設定されている時の処理
                     dispatch(push('login'))
-                } else {
+                } else {//パスワードが未設定の時の処理
                     dispatch(push('setpassword'))
                 }
             })
@@ -101,32 +101,35 @@ export const login = (password, hashedText, role) => {
 
 
 
-        if (!password) {
+        if (!password) {//パスワードが未入力の時の処理
             dispatch(setMessage('error',<p>パスワードが未入力です</p>))
             return
         }
 
-        if (hashedText === compareText) {
+        if (hashedText === compareText) {//パスワードが合致している時の処理
             dispatch(loginAction())
-            if (role === "staff") {
+            if (role === "staff") {//ユーザーがスタッフの時の処理
                 dispatch(push('/staffpage'))
-            } else {
+            } else {//ユーザーが管理者の時の処理
                 dispatch(push('/managerpage'))
             }
             dispatch(loginAction())
-        } else {
+        } else {//パスワードが間違っている時の処理
             dispatch(setMessage('error',<p>パスワードが間違っています</p>))
         }
     }
 }
 
 export const initializeUserData = () => {
+        /*-----------------------userの初期化-----------------------*/
+
     return (dispatch) => {
         dispatch(initializeUserDataAction())
     }
 }
 
 export const setIsSubmitted = (id) => {
+        /*-----------------------スタッフのシフト提出状況を提出済みにする-----------------------*/
     return (dispatch) => {
         db.collection('users')
             .doc(id)
