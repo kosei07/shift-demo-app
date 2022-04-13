@@ -31,12 +31,14 @@ export default function Worktime(props) {
             setComment(props.comment)
             setPressableClearButton(true)
         }else{
+            setStart("")
+            setFinish("")
+            setComment("")
             setPressableOkButton(false)
             setPressableClearButton(false)
             setHolidayCheckBox(false)
         }
     }, [props.start,props.finish,props.comment])
-
 /*--------------------コメントが変更された時の処理---------------------*/
     const commentChange = (e) => {
         setComment(e.target.value)
@@ -167,6 +169,7 @@ export default function Worktime(props) {
                         <TextInput
                             fullWidth={true} label={"※コメント"} multiline={false} required={true}
                             rows={1} value={comment} type={"text"} onChange={commentChange}
+                            placeholder={"(例)　二時間休憩いただきたいです"}
                         />
                     </div>
                     <div className="spacer_s"></div>

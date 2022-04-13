@@ -57,7 +57,7 @@ export default function Stafflist(props) {
   const window_size = getWindowSize()
 
   const box_height = window_size[0] * 0.5;
-  const box_width = window_size[1] * 0.7;
+  const box_width = (window_size[1] > 500)? 350:window_size[1]* 0.7;
 
   const list_height = box_height * 0.9;
   const label_height = box_height * 0.1;

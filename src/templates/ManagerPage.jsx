@@ -86,6 +86,7 @@ export default ManagerPage
 
 const ListComponent = (props) => {
     const classes = useStyles()
+    // console.log(props.isNotSubmittedMember)
     if (props.open) {
         const begin = props.period.begin
         const end = props.period.end
@@ -100,9 +101,9 @@ const ListComponent = (props) => {
                             <List className={classes.list}>
                                 <Divider />
                                 {
-                                    props.isNotSubmittedMember.map((name) => {
+                                    props.isNotSubmittedMember.map((name,index) => {
                                         return (
-                                            <ListItem className={classes.listItem} key={name}>
+                                            <ListItem className={classes.listItem} key={index}>
                                                 <ListItemText primary={name} />
                                             </ListItem>
                                         )

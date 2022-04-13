@@ -56,10 +56,12 @@ const SetPassword = () => {
                 <TextInput
                     fullWidth={true} label={"パスワード"} multiline={false} required={true}
                     rows={1} value={password} type={"password"} onChange={inputPassword}
+                    placeholder={"(例)　abcd1234"}
                 />
                 <TextInput
                     fullWidth={true} label={"パスワード(確認用)"} multiline={false} required={true}
                     rows={1} value={confirmPassword} type={"password"} onChange={inputConfirmPassword}
+                    placeholder={"(例)　abcd1234"}
                 />
                 <div className="spacer_m"></div>
                 <div className="button_wrap">

@@ -78,14 +78,17 @@ const ResetPassword = () => {
                 <TextInput
                     fullWidth={true} label={"旧パスワード"} multiline={false} required={true}
                     rows={1} value={prepassword} type={"password"} onChange={inputPrepassword}
+                    placeholder={"(例)　abcd1234"}
                 />
                 <TextInput
                     fullWidth={true} label={"新しいパスワード"} multiline={false} required={true}
                     rows={1} value={password} type={"password"} onChange={inputPassword}
+                    placeholder={"(例)　abcd1234"}
                 />
                 <TextInput
                     fullWidth={true} label={"新しいパスワード(確認用)"} multiline={false} required={true}
                     rows={1} value={confirmPassword} type={"password"} onChange={inputConfirmPassword}
+                    placeholder={"(例)　abcd1234"}
                 />
                 <div className="spacer_m"></div>
                 <div className="button_wrap">

@@ -87,7 +87,7 @@ const DrawerMenus = (props) => {
 
     const menus_option = [
         [//スタッフ・管理者専用ページ以外のメニュー
-            { func: selectMenu, label: "管理者専用ページ", icon: <DateRangeIcon />, id: "manager", value: "" },
+            // { func: selectMenu, label: "管理者専用ページ", icon: <DateRangeIcon />, id: "manager", value: "" },
             { func: selectMenu, label: "トップページ", icon: <LogoutIcon />, id: "toppage", value: "/" }
         ],
         [//スタッフページのメニュー

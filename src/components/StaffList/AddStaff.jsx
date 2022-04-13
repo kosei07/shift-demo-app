@@ -31,12 +31,14 @@ const AddStaff = (props) => {
                         <TextInput
                             fullWidth={true} label={"姓"} multiline={false} required={true}
                             rows={1} value={staffLastName} type={"text"} onChange={inputLastName}
+                            placeholder={"山田"}
                         />
                     </div>
                     <div className="addstaff_inputtext">
                         <TextInput
                             fullWidth={true} label={"名"} multiline={false} required={true}
                             rows={1} value={staffFirstName} type={"text"} onChange={inputFirstName}
+                            placeholder={"太郎"}
                         />
                     </div>
                 </div>

@@ -46,9 +46,11 @@ const Login = () => {
                     <h2>ログイン画面</h2>
                     <h2>{name}さん</h2>
                     <p>※自分で設定したパスワードを入力してください</p>
+                    <p>（　パスワード：pass1234　）</p>
                     <TextInput
                         fullWidth={true} label={"パスワード"} multiline={false} required={true}
                         rows={1} value={password} type={"password"} onChange={inputPassword}
+                        placeholder={"(例)　abcd1234"}
                     />
                     <div className="spacer_m"></div>
                     <div className="button_wrap">

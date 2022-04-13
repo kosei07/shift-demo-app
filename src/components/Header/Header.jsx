@@ -42,7 +42,7 @@ const Header = () => {
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.menuBar}>
                 <Toolbar className={classes.toolbar}>
-                    <h1 className="header_h1">焼肉ライク</h1>
+                    <h1 className="header_h1">シフトアプリ</h1>
                     <IconButton className={classes.menuIcon} onClick={(event) => handleDrawerToggle(event)}>
                         <MenuIcon fontSize="large"/>
                     </IconButton>

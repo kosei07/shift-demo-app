@@ -93,7 +93,8 @@ const Calender = (props) => {
         if ((month - 1 === beginMonth) && (lastmonth_lastdate - i >= beginDate)) { //現在閲覧中の月の前月の提出可能期間内の処理
             date_array.unshift(
                 <Datebox
-                    month={false}
+                    isThisMonth={false}
+                    month={month}
                     date={lastmonth_lastdate - i}
                     data={""}
                     isStaffpage={props.isStaffpage}
@@ -104,7 +105,8 @@ const Calender = (props) => {
         } else {//現在閲覧中の月の前月の提出可能期間外の処理
             date_array.unshift(
                 <Datebox
-                    month={false}
+                    isThisMonth={false}
+                    month={month}
                     date={lastmonth_lastdate - i}
                     data={""}
                     isStaffpage={props.isStaffpage}
@@ -123,6 +125,7 @@ const Calender = (props) => {
             if ((month === beginMonth) && ((beginDate <= i) && (i <= endDate))) {//現在閲覧中の月の提出可能期間内の処理
                 date_array.push(
                     <Datebox
+                    isThisMonth={true}
                         month={month}
                         date={i}
                         data={data}
@@ -134,6 +137,7 @@ const Calender = (props) => {
             } else {//現在閲覧中の月の提出可能期間外の処理
                 date_array.push(
                     <Datebox
+                    isThisMonth={true}
                         month={month}
                         date={i}
                         data={data}
@@ -147,6 +151,7 @@ const Calender = (props) => {
             if (((month === beginMonth) && (beginDate <= i)) || ((month !== beginMonth) && (endDate >= i))) {//現在閲覧中の月の提出可能期間内の処理
                 date_array.push(
                     <Datebox
+                    isThisMonth={true}
                         month={month}
                         date={i}
                         data={data}
@@ -158,6 +163,7 @@ const Calender = (props) => {
             } else {//現在閲覧中の月の提出可能期間外の処理
                 date_array.push(
                     <Datebox
+                    isThisMonth={true}
                         month={month}
                         date={i}
                         data={data}
@@ -178,7 +184,8 @@ const Calender = (props) => {
         if ((month + 1 === endMonth) && (i <= endDate)) {//現在閲覧中の月の次月の提出可能期間内の処理
             date_array.push(
                 <Datebox
-                    month={false}
+                isThisMonth={false}
+                    month={month}
                     date={i}
                     data={""}
                     isStaffpage={props.isStaffpage}
@@ -189,7 +196,8 @@ const Calender = (props) => {
         } else {//現在閲覧中の月の次月の提出可能期間外の処理
             date_array.push(
                 <Datebox
-                    month={false}
+                isThisMonth={false}
+                    month={month}
                     date={i}
                     data={""}
                     isStaffpage={props.isStaffpage}

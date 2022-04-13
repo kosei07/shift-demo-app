@@ -1,11 +1,13 @@
 import React from "react";
 import { Route, Switch } from "react-router"
-import { TopPage, StaffPage, ManagerPage, Configuration, Login, SetPassword, ResetPassword, Submissionperiod } from "./templates/index"
+import { TopPage, StaffPage, ManagerPage, Configuration, Login, SetPassword, ResetPassword, Submissionperiod,Select } from "./templates/index"
 import IdCheck from "./IdCheck";
+
 
 const Router = () => {
     return (
         <Switch>
+            <Route exact path='/select' component={Select} />
             <Route exact path='(/)?' component={TopPage} />
             <IdCheck>
                 <Route path='/setpassword' component={SetPassword} />
