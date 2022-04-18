@@ -91,11 +91,12 @@ const ListComponent = (props) => {
         const begin = props.period.begin
         const end = props.period.end
         return (
-            <div className="overlay modal-center">
+            <div className="overlay modal-center no_submit_list">
                 <div className="content" onClick={(e) => e.stopPropagation()}>
                     <div className="spacer_m"></div>
                     <p>提出可能期間 : {begin}〜{end}</p>
                     <p>現在の未提出者一覧</p>
+                    <div className="no_submit_list">
                     {props.length ?
                         <>
                             <List className={classes.list}>
@@ -115,6 +116,7 @@ const ListComponent = (props) => {
                         :
                         <h3>未提出者はいません</h3>
                     }
+                    </div>
                     <div className="spacer_m"></div>
                     <PrimaryButton label={"閉じる"} color="default" onClick={() => props.setOpen(false)}></PrimaryButton>
                     <div className="spacer_s"></div>

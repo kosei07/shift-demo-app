@@ -50,6 +50,12 @@
 
 
 
+ /*--------------管理者css---------------*/
+ .no_submit_list{
+  height: 300px;
+  width: 100%;
+   overflow: scroll;
+ }
  /*--------------スタッフcss---------------*/
 
 
@@ -336,5 +342,3 @@ animation-direction:normal;
     opacity: 1;
   }
 }
-
-
