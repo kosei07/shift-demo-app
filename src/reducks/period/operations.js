@@ -2,6 +2,7 @@ import { db } from '../../firebase/index'
 import { fetchSubmissoinPeriodAction } from './actions'
 import { setSubmissoinPeriodAction } from './actions'
 import { setMessage } from '../message/operations'
+import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 
 export const setSubmissoinPeriod = (beginMonth, beginDate, endMonth, endDate) => {
     return async (dispatch) => {
@@ -10,6 +11,7 @@ export const setSubmissoinPeriod = (beginMonth, beginDate, endMonth, endDate) =>
             return
         }
         const stafflist = []
+        dispatch(showLoadingAction())
         db.collection('users').where("role", "==", "staff").get()//スタッフ全員の情報を取得
             .then(snapshot => {
                 snapshot.forEach(snapshot => {
@@ -37,6 +39,7 @@ export const setSubmissoinPeriod = (beginMonth, beginDate, endMonth, endDate) =>
                     .set(data)
                     .then(() => {
                         dispatch(setSubmissoinPeriodAction(data))
+                        dispatch(hideLoadingAction())
                         dispatch(setMessage('comment', <p>提出期間を設定しました</p>))
                     })
 

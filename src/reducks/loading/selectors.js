@@ -7,7 +7,3 @@ export const getLoadingState = createSelector(
     state => state.state
 );
 
-export const getLoadingText = createSelector(
-    [loadingSelector],
-    state => state.text
-)

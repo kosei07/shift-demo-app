@@ -1,7 +1,6 @@
 const initialState = {
     loading:{
         state:false,
-        text:""
     },
     message:{
         type:"",

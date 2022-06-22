@@ -6,7 +6,7 @@ import { auth } from "../../firebase/index";
 
 export const fetchMember = () => {
     return async (dispatch) => {
-        dispatch(showLoadingAction("Plese Wait ..."))//ローディング画面描画
+        dispatch(showLoadingAction())//ローディング画面描画
         const array = []
         return auth.signInAnonymously()//匿名でfirebaseにサインイン
             .then(() => {
@@ -77,7 +77,7 @@ export const addStaff = (lastName, firstName) => {
 
 export const deleteStaff = (id, name) => {
     return async (dispatch, getState) => {
-        dispatch(showLoadingAction("Plese Wait ..."))//ローディング画面描画
+        dispatch(showLoadingAction())//ローディング画面描画
         db.collection('users').doc(id).delete()//usersからスタッフ情報を削除
         db.collection('shift').doc(name).delete()//shiftからスタッフのシフト情報を削除
             .then(() => {

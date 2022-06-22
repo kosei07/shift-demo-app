@@ -4,7 +4,6 @@ export const hideLoadingAction = () => {
         type: "HIDE_LOADING",
         payload: {
             state: false,
-            text: ""
         }
     }
 };
@@ -15,7 +14,6 @@ export const showLoadingAction = (text) => {
         type: "SHOW_LOADING",
         payload: {
             state: true,
-            text: text
         }
     }
 };

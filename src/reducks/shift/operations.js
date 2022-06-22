@@ -41,18 +41,20 @@ export const submitMonthData=(name, month, month_data)=>{
     const data = {}
     data[month] = month_data
     return async (dispacth)=>{//シフトの情報をshiftに追加する
+        dispacth(showLoadingAction())
         db.collection('shift')
         .doc(name)
         .set(data, { merge: true })
-        .then(
-            dispacth(setMessage("comment",<p>提出が完了しました</p>))
+        .then(()=>{
+            dispacth(hideLoadingAction())
+            dispacth(setMessage("comment",<p>提出が完了しました</p>))}
             )
         }
 }
 
 export const fetchMyMonthData=(month,name)=>{
     return async (dispatch)=>{
-        dispatch(showLoadingAction("Please Wait..."));//ローディング画面描画
+        dispatch(showLoadingAction());//ローディング画面描画
         db.collection('shift')//スタッフのシフト情報を取得
         .doc(name)
         .get()
@@ -112,6 +114,7 @@ export const fetchEveryoneMonthData = (month)=>{
     }
 
     return async (dispacth)=>{
+        dispacth(showLoadingAction())
         /*-----------------------閲覧中の月のスタッフ全員のシフト情報を取得する-----------------------*/
         db.collection('shift').get()
         .then((snapshot)=>{
@@ -137,6 +140,7 @@ export const fetchEveryoneMonthData = (month)=>{
             }
             })
             dispacth(fetchEveryoneMonthDataAction(object))
+            dispacth(hideLoadingAction())
             })
     }
 }

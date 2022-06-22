@@ -1,24 +1,25 @@
-import React from "react"
-import {useSelector} from "react-redux";
-import {getLoadingState, getLoadingText} from "../../reducks/loading/selectors";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getLoadingState } from "../../reducks/loading/selectors";
+import CircularProgress from "@mui/material/CircularProgress";
+const Loading = () => {
+  /*--------------ローディング画面---------------*/
 
-const Loading = ()=>{
-    /*--------------ローディング画面---------------*/
+  const selector = useSelector((state) => state);
+  const isLoading = getLoadingState(selector);
 
-    const selector = useSelector((state) => state);
-    const isBeingLoaded = getLoadingState(selector);
-    const loadingText  = getLoadingText(selector)
-
+  if (isLoading) {
     return (
-        <>
-            {(isBeingLoaded) && (
-                <section className="loading">
-                    <h1>{loadingText}</h1>
-                </section>
-            )}
-        </>
+      <section className="loading">
+        <div className="loading_content">
+          <CircularProgress color="inherit" />
+          <p>しばらくお待ちください...</p>
+        </div>
+      </section>
     );
+  } else {
+    return null;
+  }
 };
 
-
-export default Loading
+export default Loading;
