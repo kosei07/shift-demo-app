@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { getLoadingState } from "../../reducks/loading/selectors";
 import CircularProgress from "@mui/material/CircularProgress";

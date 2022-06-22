@@ -92,16 +92,27 @@ const Calender = (props) => {
 
   for (let i = 0; i < lastmonth_lastday; i++) {
     let withinPeriod_flag = false;
-    if (
-      (month - 1 === beginMonth && lastmonth_lastdate - i >= beginDate) ||
-      (month - 1 === endMonth && lastmonth_lastdate - i <= endDate)
-    ) {
-      withinPeriod_flag = true;
+    const preMonthDate = lastmonth_lastdate - i;
+    if (beginMonth === endMonth) {
+      if (
+        month - 1 === beginMonth &&
+        beginDate <= preMonthDate &&
+        preMonthDate <= endDate
+      ) {
+        withinPeriod_flag = true;
+      }
+    } else {
+      if (
+        (month - 1 === beginMonth && beginDate <= preMonthDate) ||
+        (month - 1 !== beginMonth && endDate >= preMonthDate)
+      ) {
+        withinPeriod_flag = true;
+      }
     }
     date_array.unshift(
       <Datebox
         month={false}
-        date={lastmonth_lastdate - i}
+        date={preMonthDate}
         data={""}
         isStaffpage={props.isStaffpage}
         newSubmit={newSubmit}
@@ -148,12 +159,25 @@ const Calender = (props) => {
 
   for (let i = 1; i < 7 - nextmonth_lastday; i++) {
     let withinPeriod_flag = false;
-    if (
-      (month + 1 === beginMonth && i >= beginDate) ||
-      (month + 1 === endMonth && i <= endDate)
-    ) {
-      withinPeriod_flag = true;
+    // if (
+    //   (month + 1 === beginMonth && i >= beginDate) ||
+    //   (month + 1 === endMonth && i <= endDate)
+    // ) {
+    //   withinPeriod_flag = true;
+    // }
+    if (beginMonth === endMonth) {
+      if (month + 1 === beginMonth && beginDate <= i && i <= endDate) {
+        withinPeriod_flag = true;
+      }
+    } else {
+      if (
+        (month + 1 === beginMonth && beginDate <= i) ||
+        (month + 1 !== beginMonth && endDate >= i)
+      ) {
+        withinPeriod_flag = true;
+      }
     }
+
     date_array.push(
       <Datebox
         month={false}
