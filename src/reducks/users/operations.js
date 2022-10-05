@@ -5,32 +5,25 @@ import {
     setIsSubmittedAction
 } from "./actions";
 import { push } from "connected-react-router";
-import { db} from '../../firebase/index'
+import { db } from '../../firebase/index'
 import { setMessage } from "../message/operations";
 
-
-
-export const listenIdState = () => {
-    return async (dispatch) => {
-        dispatch(push('/'))
-    }
-}
 
 export const setPasswordData = (password, confirmPassword, id) => {
     return async (dispatch) => {
         /*-----------------------バリデーション-----------------------*/
         if (!(password && confirmPassword)) {
-            dispatch(setMessage("error",<p>未入力の項目があります</p>))
+            dispatch(setMessage("error", <p>未入力の項目があります</p>))
             return
         }
 
         if (password !== confirmPassword) {
-            dispatch(setMessage('error',<p>パスワードと確認用パスワードが一致しません</p>))
+            dispatch(setMessage('error', <p>パスワードと確認用パスワードが一致しません</p>))
             return
         }
 
         if (password.length < 6) {
-            dispatch(setMessage('error',<p>パスワードは6文字以上で入力してください</p>))
+            dispatch(setMessage('error', <p>パスワードは6文字以上で入力してください</p>))
             return
         }
 
@@ -40,7 +33,7 @@ export const setPasswordData = (password, confirmPassword, id) => {
         }
 
         if (!Validation(password)) {
-            dispatch(setMessage('error',<p>パスワードには半角英小文字と半角数字を使用してください</p>))
+            dispatch(setMessage('error', <p>パスワードには半角英小文字と半角数字を使用してください</p>))
             return
         }
 
@@ -78,18 +71,20 @@ export const fetchUserData = (id) => {
                     isSubmitted: data.isSubmitted
                 }))
                 if (getState().user.hashedText) {//パスワードが設定されている時の処理
-                    dispatch(push('login'))
+                    dispatch(push('/login'))
                 } else {//パスワードが未設定の時の処理
-                    dispatch(push('setpassword'))
+                    dispatch(push('/setpassword'))
                 }
             })
     }
 }
 
 
-export const login = (password, hashedText, role) => {
+export const login = (password) => {
     /*----------------------パスワード復号化-----------------*/
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+
+        const { hashedText, role } = getState().user
 
         const crypto = require("crypto")
 
@@ -100,28 +95,26 @@ export const login = (password, hashedText, role) => {
         const compareText = sha512.digest('hex')
 
 
-
         if (!password) {//パスワードが未入力の時の処理
-            dispatch(setMessage('error',<p>パスワードが未入力です</p>))
+            dispatch(setMessage('error', <p>パスワードが未入力です</p>))
             return
         }
 
         if (hashedText === compareText) {//パスワードが合致している時の処理
             dispatch(loginAction())
             if (role === "staff") {//ユーザーがスタッフの時の処理
-                dispatch(push('/staffpage'))
+                dispatch(push('/staff'))
             } else {//ユーザーが管理者の時の処理
-                dispatch(push('/managerpage'))
+                dispatch(push('/manager'))
             }
-            dispatch(loginAction())
         } else {//パスワードが間違っている時の処理
-            dispatch(setMessage('error',<p>パスワードが間違っています</p>))
+            dispatch(setMessage('error', <p>パスワードが間違っています</p>))
         }
     }
 }
 
 export const initializeUserData = () => {
-        /*-----------------------userの初期化-----------------------*/
+    /*-----------------------userの初期化-----------------------*/
 
     return (dispatch) => {
         dispatch(initializeUserDataAction())
@@ -129,7 +122,7 @@ export const initializeUserData = () => {
 }
 
 export const setIsSubmitted = (id) => {
-        /*-----------------------スタッフのシフト提出状況を提出済みにする-----------------------*/
+    /*-----------------------スタッフのシフト提出状況を提出済みにする-----------------------*/
     return (dispatch) => {
         db.collection('users')
             .doc(id)
