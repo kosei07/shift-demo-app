@@ -10,8 +10,6 @@ const Auth = ({ children }) => {
   const isSignedIn = user_data.isSignedIn;
 
   useEffect(() => {
-    const path = window.location.pathname;
-    console.log(path);
     if (!isSignedIn) {
       dispatch(push("/"));
     }

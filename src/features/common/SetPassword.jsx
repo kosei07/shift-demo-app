@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, PrimaryButton } from "../..//UIkit/index";
 import { useDispatch, useSelector } from "react-redux";
 import { setPasswordData } from "../../reducks/users/operations";
@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import { getUserData } from "../../reducks/users/selectors";
 import { makeStyles } from "@material-ui/styles";
 import { createStyles } from "@mui/material";
+import { push } from "connected-react-router";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -25,6 +26,13 @@ const SetPassword = () => {
 
   const id = user_data.id;
   const name = user_data.name;
+
+  useEffect(() => {
+    if (!name) {
+      dispatch(push("/"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

@@ -24,8 +24,8 @@ const AppRouter = () => {
       <Route exact path="/select" component={Select} />
       <Route exact path="(/)?" component={TopPage} />
       <Route path="/login" component={Login} />
+      <Route path="/setpassword" component={SetPassword} />
       <Auth>
-        <Route path="/setpassword" component={SetPassword} />
         <Route path="/changepassword" component={ChangePassword} />
         <Route exact path="/staff" component={StaffPage} />
         <Route exact path="/manager" component={ManagerPage} />
