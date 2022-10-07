@@ -14,15 +14,13 @@ const Select = () => {
   const { name } = user_data;
 
   const onClickFunction = (id) => {
-    // navigate("/home/login");
-
     //トップページのスタッフリストのスタッフを選択した時の処理
     dispatch(fetchUserData(id));
   };
 
   useEffect(() => {
     if (name) {
-      navigate("/home/login");
+      navigate("/login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);

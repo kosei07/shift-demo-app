@@ -8,7 +8,7 @@ import { Login, TopPage, Select } from "./index";
 export default function HomeRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<TopPage />} />
+      <Route index element={<TopPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/select" element={<Select />} />
     </Routes>

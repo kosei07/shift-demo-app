@@ -34,12 +34,12 @@ const TopPage = () => {
   };
   const onClickStaffPage = () => {
     // dispatch(push("/select"));
-    navigate("/home/select");
+    navigate("/select");
   };
 
   useEffect(() => {
     if (name) {
-      navigate("/home/login");
+      navigate("/login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);

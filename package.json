@@ -1,6 +1,5 @@
 {
   "name": "shift-demo-app",
-  "homepage": "/home",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

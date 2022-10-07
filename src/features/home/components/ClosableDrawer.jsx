@@ -93,7 +93,7 @@ const DrawerMenus = (props) => {
         label: "トップページ",
         icon: <LogoutIcon />,
         id: "toppage",
-        value: "/home",
+        value: "/",
       },
     ],
     [
@@ -117,7 +117,7 @@ const DrawerMenus = (props) => {
         label: "ログアウト",
         icon: <LogoutIcon />,
         id: "toppage",
-        value: "/home",
+        value: "/",
       },
     ],
     [
@@ -155,7 +155,7 @@ const DrawerMenus = (props) => {
         label: "ログアウト",
         icon: <LogoutIcon />,
         id: "toppage",
-        value: "/home",
+        value: "/",
       },
     ],
   ];

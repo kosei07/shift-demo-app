@@ -39,7 +39,7 @@ const Login = () => {
 
   useEffect(() => {
     if (!name) {
-      navigate("/home");
+      navigate("/");
     } else {
       if (!hashedText) {
         navigate("/setpassword");

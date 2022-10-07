@@ -28,10 +28,10 @@ const SetPassword = () => {
 
   useEffect(() => {
     if (!name) {
-      navigate("/home");
+      navigate("/");
     }
     if (hashedtext) {
-      navigate("/home/login");
+      navigate("/login");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
