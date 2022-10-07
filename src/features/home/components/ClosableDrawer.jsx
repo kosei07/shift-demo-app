@@ -5,7 +5,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { push } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DateRangeIcon from "@mui/icons-material/DateRange";
@@ -18,6 +17,7 @@ import {
   initializeUserData,
 } from "../../../reducks/users/operations";
 import { initializeMonthData } from "../../../reducks/shift/operations";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -69,6 +69,7 @@ const DrawerMenus = (props) => {
   const user_data = getUserData(selector);
   const role = user_data.role;
   const isSignedIn = user_data.isSignedIn;
+  const navigate = useNavigate();
 
   const selectMenu = (event, id, path) => {
     props.onClose(event);
@@ -80,7 +81,7 @@ const DrawerMenus = (props) => {
       dispatch(initializeUserData()); //stateのuserとmonthを初期化
       dispatch(initializeMonthData());
     }
-    dispatch(push(path));
+    navigate(path);
   };
 
   const menus_option = [
@@ -92,7 +93,7 @@ const DrawerMenus = (props) => {
         label: "トップページ",
         icon: <LogoutIcon />,
         id: "toppage",
-        value: "/",
+        value: "/home",
       },
     ],
     [
@@ -102,7 +103,7 @@ const DrawerMenus = (props) => {
         label: "カレンダー",
         icon: <DateRangeIcon />,
         id: "calender",
-        value: "/staffpage",
+        value: "/staff",
       },
       {
         func: selectMenu,
@@ -116,7 +117,7 @@ const DrawerMenus = (props) => {
         label: "ログアウト",
         icon: <LogoutIcon />,
         id: "toppage",
-        value: "/",
+        value: "/home",
       },
     ],
     [
@@ -133,7 +134,7 @@ const DrawerMenus = (props) => {
         label: "提出期間",
         icon: <CheckBoxIcon />,
         id: "submittion",
-        value: "/manager/shiftperiod",
+        value: "/manager/submissionperiod",
       },
       {
         func: selectMenu,
@@ -154,7 +155,7 @@ const DrawerMenus = (props) => {
         label: "ログアウト",
         icon: <LogoutIcon />,
         id: "toppage",
-        value: "/",
+        value: "/home",
       },
     ],
   ];
@@ -178,6 +179,7 @@ const DrawerMenus = (props) => {
         <h1>menu</h1>
       </div>
       {menus.map((menu) => (
+        // <Link to={menu.value}>
         <ListItem
           key={menu.id}
           button
@@ -188,6 +190,7 @@ const DrawerMenus = (props) => {
           <ListItemIcon>{menu.icon}</ListItemIcon>
           <ListItemText primary={menu.label} />
         </ListItem>
+        // </Link>
       ))}
     </>
   );

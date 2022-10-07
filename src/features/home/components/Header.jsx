@@ -4,6 +4,7 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { ClosableDrawer } from "./index";
+import { NavLink, Outlet } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -39,22 +40,21 @@ const Header = () => {
   };
 
   return (
-    <>
-      <div className={classes.root}>
-        <div className={classes.menuBar}>
-          <Toolbar className={classes.toolbar}>
-            <h1 className="header_h1">シフトアプリ</h1>
-            <IconButton
-              className={classes.menuIcon}
-              onClick={(event) => handleDrawerToggle(event)}
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
-          </Toolbar>
-        </div>
-        <ClosableDrawer open={open} onClose={handleDrawerToggle} />
+    <div className={classes.root}>
+      <div className={classes.menuBar}>
+        <Toolbar className={classes.toolbar}>
+          <h1 className="header_h1">シフトアプリ</h1>
+          <IconButton
+            className={classes.menuIcon}
+            onClick={(event) => handleDrawerToggle(event)}
+          >
+            <MenuIcon fontSize="large" />
+          </IconButton>
+        </Toolbar>
       </div>
-    </>
+      <ClosableDrawer open={open} onClose={handleDrawerToggle} />
+      <Outlet />
+    </div>
   );
 };
 

@@ -55,7 +55,7 @@ const ManagerPage = () => {
   };
 
   return (
-    <>
+    <main className="main_wrap">
       <div className="margin_padding_0 text_center wrap">
         <h3>
           {period.begin}~{period.end} 未提出者 :{" "}
@@ -80,7 +80,7 @@ const ManagerPage = () => {
         length={isNotSubmittedMember.length}
         isNotSubmittedMember={isNotSubmittedMember}
       />
-    </>
+    </main>
   );
 };
 

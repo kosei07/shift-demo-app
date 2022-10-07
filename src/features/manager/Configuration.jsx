@@ -25,7 +25,7 @@ const Configuration = () => {
   };
 
   return (
-    <>
+    <main className="main_wrap">
       <div className="spacer_m"></div>
       <p className="text_p">
         　スタッフを追加する場合は「スタッフ追加」を押してください。
@@ -59,7 +59,7 @@ const Configuration = () => {
         deleteStaffName={deleteStaffName}
         deleteStaffId={deleteStaffId}
       />
-    </>
+    </main>
   );
 };
 

@@ -197,7 +197,7 @@ const Submissionperiod = () => {
   };
 
   return (
-    <div>
+    <main className="main_wrap">
       <div className="spacer_s"></div>
       <Card className={classes.cardcontent}>
         <CardContent>
@@ -296,7 +296,7 @@ const Submissionperiod = () => {
           onClick={onClickOk}
         ></PrimaryButton>
       </div>
-    </div>
+    </main>
   );
 };
 

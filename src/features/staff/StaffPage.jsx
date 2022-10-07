@@ -48,7 +48,7 @@ const Staffpage = () => {
   };
 
   return (
-    <>
+    <main className="main_wrap">
       <div className="spacer_m"></div>
       <div className="stack_wrap">
         <div className="stack">
@@ -86,7 +86,7 @@ const Staffpage = () => {
         fetchFunction={fetchMyMonthDataFunction}
       />
       <StaffHelp show={show} setShow={setShow} />
-    </>
+    </main>
   );
 };
 
