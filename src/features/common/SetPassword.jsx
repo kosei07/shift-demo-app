@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import { getUserData } from "../../reducks/users/selectors";
 import { makeStyles } from "@material-ui/styles";
 import { createStyles } from "@mui/material";
-import { push } from "connected-react-router";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -19,20 +19,23 @@ const useStyles = makeStyles(() =>
 );
 
 const SetPassword = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const user_data = getUserData(selector);
-
-  const id = user_data.id;
-  const name = user_data.name;
+  const { id, name, hashedtext } = user_data;
 
   useEffect(() => {
     if (!name) {
-      dispatch(push("/"));
+      navigate("/home");
     }
+    if (hashedtext) {
+      navigate("/home/login");
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hashedtext]);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -50,12 +53,13 @@ const SetPassword = () => {
   const onClick = () => {
     //設定するをそした時の処理
     dispatch(setPasswordData(password, confirmPassword, id));
+    navigate("/home/login");
     setPassword("");
     setConfirmPassword("");
   };
 
   return (
-    <>
+    <main className="main_wrap">
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
@@ -101,7 +105,7 @@ const SetPassword = () => {
           </div>
         </CardContent>
       </Card>
-    </>
+    </main>
   );
 };
 

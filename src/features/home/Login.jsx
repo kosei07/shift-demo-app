@@ -8,7 +8,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { makeStyles } from "@material-ui/styles";
 import { createStyles } from "@mui/material";
-import { push } from "connected-react-router";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,12 +20,15 @@ const useStyles = makeStyles(() =>
 );
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const user_data = getUserData(selector);
+  const { name, isSignedIn, role, hashedText } = user_data;
 
-  const name = user_data.name;
+  // const name = user_data.name;
 
   const [password, setPassword] = useState("");
 
@@ -36,13 +39,28 @@ const Login = () => {
 
   useEffect(() => {
     if (!name) {
-      dispatch(push("/"));
+      navigate("/home");
+    } else {
+      if (!hashedText) {
+        navigate("/setpassword");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (isSignedIn) {
+      if (role === "manager") {
+        navigate("/manager");
+      } else {
+        navigate("/staff");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignedIn]);
+
   return (
-    <>
+    <main className="main_wrap">
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
@@ -77,7 +95,7 @@ const Login = () => {
           </div>
         </CardContent>
       </Card>
-    </>
+    </main>
   );
 };
 

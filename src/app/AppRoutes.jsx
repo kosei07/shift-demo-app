@@ -1,38 +1,27 @@
-import React from "react";
-import { Route, Switch } from "react-router";
-import Auth from "./Auth";
+import React, { lazy } from "react";
+// import { Route, Switch } from "react-router";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Header } from "../features/home/components";
 
-const ChangePassword = React.lazy(() =>
-  import("../features/common/ChangePassword")
-);
-const SetPassword = React.lazy(() => import("../features/common/SetPassword"));
-const Login = React.lazy(() => import("../features/home/Login"));
-const Select = React.lazy(() => import("../features/home/Select"));
-const TopPage = React.lazy(() => import("../features/home/TopPage"));
-const Configuration = React.lazy(() =>
-  import("../features/manager/Configuration")
-);
-const ManagerPage = React.lazy(() => import("../features/manager/ManagerPage"));
-const Submissionperiod = React.lazy(() =>
-  import("../features/manager/Submissionperiod")
-);
-const StaffPage = React.lazy(() => import("../features/staff/StaffPage"));
+// const HomeRoute = lazy(() => import("../features/home/HomeRoutes"));
+
+const HomeRoute = lazy(() => import("../features/home/HomeRoutes"));
+const ManagerRoute = lazy(() => import("../features/manager/ManagerRoutes"));
+const StaffRoute = lazy(() => import("../features/staff/StaffRoutes"));
+const ChangePassword = lazy(() => import("../features/common/ChangePassword"));
+const SetPassword = lazy(() => import("../features/common/SetPassword"));
 
 const AppRouter = () => {
   return (
-    <Switch>
-      <Route exact path="/select" component={Select} />
-      <Route exact path="(/)?" component={TopPage} />
-      <Route path="/login" component={Login} />
-      <Route path="/setpassword" component={SetPassword} />
-      <Auth>
-        <Route path="/changepassword" component={ChangePassword} />
-        <Route exact path="/staff" component={StaffPage} />
-        <Route exact path="/manager" component={ManagerPage} />
-        <Route exact path="/manager/configuration" component={Configuration} />
-        <Route exact path="/manager/shiftperiod" component={Submissionperiod} />
-      </Auth>
-    </Switch>
+    <Routes>
+      <Route path="/" element={<Header />}>
+        <Route path="home/*" element={<HomeRoute />} />
+        <Route path="manager/*" element={<ManagerRoute />} />
+        <Route path="staff/*" element={<StaffRoute />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/setpassword" element={<SetPassword />} />
+      </Route>
+    </Routes>
   );
 };
 export default AppRouter;

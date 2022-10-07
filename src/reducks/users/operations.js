@@ -4,13 +4,11 @@ import {
     loginAction,
     setIsSubmittedAction
 } from "./actions";
-import { push } from "connected-react-router";
 import { db } from '../../firebase/index'
 import { setMessage } from "../message/operations";
 
-
 export const setPasswordData = (password, confirmPassword, id) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         /*-----------------------バリデーション-----------------------*/
         if (!(password && confirmPassword)) {
             dispatch(setMessage("error", <p>未入力の項目があります</p>))
@@ -52,7 +50,14 @@ export const setPasswordData = (password, confirmPassword, id) => {
 
         db.collection('users').doc(id).set(data, { merge: true })//スタッフの情報をusersに追加
             .then(
-                dispatch(fetchUserData(id))
+                dispatch(fetchUserDataAction({
+                    isSignedIn: false,
+                    id: getState().user.id,
+                    name: getState().user.name,
+                    hashedText: hashedText,
+                    role: getState().user.role,
+                    isSubmitted: getState().user.isSubmitted
+                }))
             )
     }
 }
@@ -70,11 +75,6 @@ export const fetchUserData = (id) => {
                     role: data.role,
                     isSubmitted: data.isSubmitted
                 }))
-                if (getState().user.hashedText) {//パスワードが設定されている時の処理
-                    dispatch(push('/login'))
-                } else {//パスワードが未設定の時の処理
-                    dispatch(push('/setpassword'))
-                }
             })
     }
 }
@@ -84,7 +84,7 @@ export const login = (password) => {
     /*----------------------パスワード復号化-----------------*/
     return async (dispatch, getState) => {
 
-        const { hashedText, role } = getState().user
+        const { hashedText } = getState().user
 
         const crypto = require("crypto")
 
@@ -102,11 +102,6 @@ export const login = (password) => {
 
         if (hashedText === compareText) {//パスワードが合致している時の処理
             dispatch(loginAction())
-            if (role === "staff") {//ユーザーがスタッフの時の処理
-                dispatch(push('/staff'))
-            } else {//ユーザーが管理者の時の処理
-                dispatch(push('/manager'))
-            }
         } else {//パスワードが間違っている時の処理
             dispatch(setMessage('error', <p>パスワードが間違っています</p>))
         }

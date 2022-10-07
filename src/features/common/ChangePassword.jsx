@@ -9,6 +9,7 @@ import { getUserData } from "../../reducks/users/selectors";
 import { makeStyles } from "@material-ui/styles";
 import { createStyles } from "@mui/material";
 import { setMessage } from "../../reducks/message/operations";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,13 +21,12 @@ const useStyles = makeStyles(() =>
 );
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const user_data = getUserData(selector);
-  const id = user_data.id;
-  const name = user_data.name;
-  const hashedText = user_data.hashedText;
+  const { id, name, hashedText, role } = user_data;
 
   const [prepassword, setPrepassword] = useState("");
   const [password, setPassword] = useState("");
@@ -61,13 +61,19 @@ const ChangePassword = () => {
     } else {
       dispatch(setMessage("error", "旧パスワードが間違っています"));
     }
+
+    if (role === "manager") {
+      navigate("/manager");
+    } else {
+      navigate("/staff");
+    }
     setPrepassword("");
     setPassword("");
     setConfirmPassword("");
   };
 
   return (
-    <>
+    <main className="main_wrap">
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
@@ -119,7 +125,7 @@ const ChangePassword = () => {
           </div>
         </CardContent>
       </Card>
-    </>
+    </main>
   );
 };
 

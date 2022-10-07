@@ -6,6 +6,7 @@ import "../assets/reset.css";
 import { Header } from "../features/home/components/index";
 import { auth } from "../firebase";
 import { MessageComponent, Loading } from "../UIkit/index";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 const App = () => {
   useEffect(() => {
@@ -16,10 +17,12 @@ const App = () => {
     <React.Suspense fallback="loading...">
       <MessageComponent />
       <Loading />
-      <Header />
-      <main className="main_wrap">
+      {/* <Header /> */}
+      {/* <main className="main_wrap"> */}
+      <BrowserRouter>
         <AppRouter />
-      </main>
+      </BrowserRouter>
+      {/* </main> */}
     </React.Suspense>
   );
 };

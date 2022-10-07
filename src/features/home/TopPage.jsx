@@ -1,5 +1,6 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserData } from "../../reducks/users/selectors";
 import { fetchUserData } from "../../reducks/users/operations";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,6 +10,7 @@ import { PrimaryButton } from "../../UIkit/index";
 import Divider from "@material-ui/core/Divider";
 // import { useNavigate } from "react-router-dom";
 import { push } from "connected-react-router";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,21 +22,32 @@ const useStyles = makeStyles(() =>
 );
 
 const TopPage = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const classes = useStyles();
 
   const dispatch = useDispatch();
+  const selector = useSelector((state) => state);
+  const user_data = getUserData(selector);
+  const { name } = user_data;
 
-  const onClickManagerPage = () => {
+  const onClickManagerPage = async () => {
     dispatch(fetchUserData("kyv39ixrt0")); // 管理者のデータを取得
   };
   const onClickStaffPage = () => {
-    dispatch(push("/select"));
+    // dispatch(push("/select"));
+    navigate("/home/select");
   };
 
+  useEffect(() => {
+    if (name) {
+      navigate("/home/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name]);
+
   return (
-    <>
+    <main className="main_wrap">
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
       <div className="spacer_l"></div>
@@ -73,7 +86,7 @@ const TopPage = () => {
           <div className="spacer_s"></div>
         </CardContent>
       </Card>
-    </>
+    </main>
   );
 };
 
