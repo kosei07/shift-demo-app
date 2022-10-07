@@ -1,5 +1,5 @@
-import React, { lazy } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
 import { Configuration, ManagerPage, Submissionperiod } from "./index";
 

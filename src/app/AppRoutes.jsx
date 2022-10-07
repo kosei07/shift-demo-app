@@ -1,6 +1,6 @@
 import React, { lazy } from "react";
 // import { Route, Switch } from "react-router";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Header } from "../features/home/components";
 
 // const HomeRoute = lazy(() => import("../features/home/HomeRoutes"));

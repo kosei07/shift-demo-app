@@ -4,7 +4,7 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { ClosableDrawer } from "./index";
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({

@@ -8,8 +8,6 @@ import { makeStyles } from "@material-ui/styles";
 import { createStyles } from "@mui/material";
 import { PrimaryButton } from "../../UIkit/index";
 import Divider from "@material-ui/core/Divider";
-// import { useNavigate } from "react-router-dom";
-import { push } from "connected-react-router";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() =>

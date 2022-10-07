@@ -11,7 +11,7 @@ const Select = () => {
 
   const selector = useSelector((state) => state);
   const user_data = getUserData(selector);
-  const { name, isSignedIn, role } = user_data;
+  const { name } = user_data;
 
   const onClickFunction = (id) => {
     // navigate("/home/login");
