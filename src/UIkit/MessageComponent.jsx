@@ -19,6 +19,7 @@ const normal_style = {
   backgroundColor: "ghostwhite",
   border: "solid 1px black",
   boxShadow: "0px 0px 0px 5px ghostwhite",
+
 };
 
 const MessageComponent = () => {
@@ -36,7 +37,7 @@ const MessageComponent = () => {
 
   if (type) {
     return (
-      <div className="overlay modal-center">
+      <div className="overlay message-modal-center">
         <div
           className="content message_animation"
           onClick={(e) => e.stopPropagation()}
