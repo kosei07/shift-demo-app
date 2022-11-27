@@ -26,7 +26,8 @@ const Calender = (props) => {
   const [year, setYear] = useState(today.getFullYear());
   let [month, moveMonth] = useState(today.getMonth() + 1);
   const month_length = new Date(year, month, 0).getDate();
-  const [isThisMonth, setIsThisMonth] = useState(true);
+  const [afterMonthCount,setAfterMonthCount] = useState(0) // 今月から何ヶ月後か
+
 
   /*ーーーーースタッフのシフト提出可能期を取得ーーーーーーー*/
 
@@ -56,7 +57,8 @@ const Calender = (props) => {
       } else {
         moveMonth(month);
       }
-      setIsThisMonth(false);
+      setAfterMonthCount(pre=>pre+1)
+
       props.fetchFunction(month.toString(), name);
     } else {
       //「提出する」を押さずに月を移動しようとした時の処理
@@ -66,7 +68,7 @@ const Calender = (props) => {
 
   /*-------------今月に移動した時の処理の処理--------------*/
 
-  const moveThisMonth = () => {
+  const movePreMonth = () => {
     if (!newSubmit) {
       month--;
       if (month < 1) {
@@ -77,7 +79,9 @@ const Calender = (props) => {
       } else {
         moveMonth(month);
       }
-      setIsThisMonth(true);
+
+      setAfterMonthCount(pre=>pre-1)
+
       props.fetchFunction(month.toString(), name);
     } else {
       //「提出する」を押さずに月を移動しようとした時の処理
@@ -135,7 +139,9 @@ const Calender = (props) => {
     } else {
       if (
         (month === beginMonth && beginDate <= i) ||
-        (month !== beginMonth && endDate >= i)
+        (month === endMonth && endDate >= i) ||
+        ((month !== beginMonth &&  month !== endMonth) && (Math.abs(endMonth - beginMonth) > 1) && (Math.abs(endMonth - beginMonth) < 11)) // 選択した期間の開始と終了の月の真ん中の月
+
       ) {
         withinPeriod_flag = true;
       }
@@ -208,11 +214,11 @@ const Calender = (props) => {
         <div className="spacer_ss"></div>
         <div className="calender_top_wrap">
           <div className="calender_top_icon">
-            {!isThisMonth && <ArrowBackIosIcon onClick={moveThisMonth} />}
+            {afterMonthCount !== 0  && <ArrowBackIosIcon onClick={movePreMonth} />}
           </div>
-          <h3 className="margin_padding_0">{month}月</h3>
+          <h3 className="margin_padding_0">{year}年 {month}月</h3>
           <div className="calender_top_icon">
-            {isThisMonth && <ArrowForwardIosIcon onClick={moveNextMonth} />}
+            {afterMonthCount !== 2 &&<ArrowForwardIosIcon onClick={moveNextMonth} />}
           </div>
         </div>
       </div>

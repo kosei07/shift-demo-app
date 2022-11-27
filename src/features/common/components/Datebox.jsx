@@ -78,6 +78,12 @@ export const Datebox = (props) => {
     }
   }, [month, updateSubmit, props.newSubmit, withinPeriod, isStaffpage]);
 
+  useEffect(()=>{
+    if(!props.newSubmit){
+      setUpdateSubmit(false)
+    }
+  },[props.newSubmit])
+
   return (
     <div className="datebox_wrap" style={style} onClick={open}>
       <div>
@@ -92,7 +98,6 @@ export const Datebox = (props) => {
           setShow={setShow}
           setUpdateSubmit={setUpdateSubmit}
           setNewSubmit={props.setNewSubmit}
-          //   setStyle={setStyle}
           withinPeriod={withinPeriod}
         />
       ) : (

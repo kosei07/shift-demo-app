@@ -42,7 +42,7 @@ const Submissionperiod = () => {
   const [year, setYear] = useState(today.getFullYear());
   let [month, moveMonth] = useState(today.getMonth() + 1);
   const month_length = new Date(year, month, 0).getDate();
-  const [isThisMonth, setIsThisMonth] = useState(true);
+  const [afterMonthCount,setAfterMonthCount] = useState(0) // 今月から何ヶ月後か
 
   const moveNextMonth = () => {
     //次月に移動
@@ -55,10 +55,10 @@ const Submissionperiod = () => {
     } else {
       moveMonth(month);
     }
-    setIsThisMonth(false);
+    setAfterMonthCount(pre=>pre+1)
   };
 
-  const moveThisMonth = () => {
+  const movePreMonth = () => {
     //今月に移動
     month--;
     if (month < 1) {
@@ -69,8 +69,9 @@ const Submissionperiod = () => {
     } else {
       moveMonth(month);
     }
-    setIsThisMonth(true);
+    setAfterMonthCount(pre=>pre-1)
   };
+
 
   const onClick = (e) => {
     //日付を選択した時の処理
@@ -127,20 +128,14 @@ const Submissionperiod = () => {
     } else {
       if (submissionPeriodEndMonth !== false) {
         if (
-          (month === submissionPeriodBeginMonth &&
-            submissionPeriodBeginDate <= i) ||
-          (month !== submissionPeriodBeginMonth && submissionPeriodEndDate >= i)
+          (month === submissionPeriodBeginMonth && submissionPeriodBeginDate <= i) ||
+          (month === submissionPeriodEndMonth && submissionPeriodEndDate >= i) ||
+          ((month !== submissionPeriodBeginMonth &&  month !== submissionPeriodEndMonth) 
+          &&(Math.abs(submissionPeriodEndMonth - submissionPeriodBeginMonth) > 1 && Math.abs(submissionPeriodEndMonth - submissionPeriodBeginMonth) < 11)) // 選択した期間の開始と終了の月の真ん中の月
         ) {
           withinRange_flag = true;
         }
-      } else {
-        if (
-          month === submissionPeriodBeginMonth &&
-          i === submissionPeriodBeginDate
-        ) {
-          withinRange_flag = true;
-        }
-      }
+      } 
     }
     date_array.push(
       <ShiftperiodDatebox
@@ -244,11 +239,11 @@ const Submissionperiod = () => {
         <div className="spacer_ss"></div>
         <div className="calender_top_wrap">
           <div className="calender_top_icon">
-            {!isThisMonth && <ArrowBackIosIcon onClick={moveThisMonth} />}
+            {afterMonthCount !== 0 && <ArrowBackIosIcon onClick={movePreMonth} />}
           </div>
-          <h3 className="margin_padding_0">{month}月</h3>
+          <h3 className="margin_padding_0">{year}年 {month}月</h3>
           <div className="calender_top_icon">
-            {isThisMonth && <ArrowForwardIosIcon onClick={moveNextMonth} />}
+            {afterMonthCount !== 2 &&<ArrowForwardIosIcon onClick={moveNextMonth} />}
           </div>
         </div>
       </div>

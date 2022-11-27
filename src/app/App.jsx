@@ -16,12 +16,9 @@ const App = () => {
     <React.Suspense fallback="loading...">
       <MessageComponent />
       <Loading />
-      {/* <Header /> */}
-      {/* <main className="main_wrap"> */}
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>
-      {/* </main> */}
     </React.Suspense>
   );
 };
