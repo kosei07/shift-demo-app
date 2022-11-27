@@ -26,7 +26,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const user_data = getUserData(selector);
-  const { name, isSignedIn, role, hashedText } = user_data;
+  const { name } = user_data;
 
   // const name = user_data.name;
 
@@ -37,27 +37,6 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  useEffect(() => {
-    if (!name) {
-      navigate("/");
-    } else {
-      if (!hashedText) {
-        navigate("/setpassword");
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (isSignedIn) {
-      if (role === "manager") {
-        navigate("/manager");
-      } else {
-        navigate("/staff");
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignedIn]);
 
   return (
     <main className="main_wrap">
